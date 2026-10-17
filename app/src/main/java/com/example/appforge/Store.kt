@@ -11,6 +11,9 @@ class Store(ctx: Context) {
         get() = prefs.getString("token", "") ?: ""
         set(v) = prefs.edit().putString("token", v).apply()
 
+    fun persistent(project: String): Boolean = prefs.getBoolean("persist:$project", true)
+    fun setPersistent(project: String, v: Boolean) = prefs.edit().putBoolean("persist:$project", v).apply()
+
     val root: File = File(ctx.filesDir, "projects").also { it.mkdirs() }
 
     private fun safe(name: String, path: String): File {
